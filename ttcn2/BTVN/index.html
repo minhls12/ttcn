@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTVN</title>
+    <style>
+            body{
+                max-width: 480px;
+                margin: 40px auto;
+                padding: 0 16px;
+            }
+
+            label {
+                font-weight: bold;
+            }
+
+            textarea {
+                width: 100%;
+                margin-top: 8px;
+                height: 200px;
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: none;
+            }
+
+            #dem-ki-tu{
+                margin-top: 8px;
+                color: #333;
+            }
+            #dem-ki-tu.error {
+                color: red;
+                font-weight: bold;
+                font-size: 20px;
+            }
+    </style>
+</head>
+<body>
+    <label for="ghi-chu-fe">Ghi chú (tối đa 100 kí tự):</label>
+
+    <textarea name="" id="ghi-chu-fe" maxlength="100"></textarea>
+
+    <p id="dem-ki-tu">0 / 100</p>
+
+    <script>
+        const oNhap = document.querySelector("#ghi-chu-fe");
+        const hienThi = document.querySelector("#dem-ki-tu");
+
+        oNhap.addEventListener("input", () => {
+            const soKyTu = oNhap.value.length;
+            hienThi.textContent = `${soKyTu} / ${oNhap.maxLength}`;
+            hienThi.className = soKyTu >= 90 ? "error": "";
+        });
+
+    </script>
+</body>
+</html>
