@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTVN2</title>
+    <style>
+        body{
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+        .box{
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+        input{
+            width: 70%;
+            padding: 6px 8px;
+            margin-right: 8px;
+        }
+        button{
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 0;
+        }
+        li{
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        li.done span{
+            text-decoration: line-through;
+            color: #888;
+        }
+        .status{
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <form id="form">
+            <input id="tenMon" type="text" placeholder="Tên món">
+            <button type="submit">Thêm</button>
+        </form>
+        <ul id="ds"></ul>
+        <div class="status" id="status">Còn 0/0 món chưa mua</div>
+    </div>
+
+    <script>
+        const form = document.querySelector('#form')
+        const input = document.querySelector('#tenMon')
+        const list = document.querySelector('#ds')
+        const status = document.querySelector('#status')
+        let items = []
+
+        const render = () => {
+            list.innerHTML = ''
+
+            if (items.length === 0) {
+                const li = document.createElement('li')
+                li.textContent = 'Chưa có món nào'
+                li.style.color = '#888'
+                list.appendChild(li)
+            } else {
+                items.forEach(item => {
+                    const li = document.createElement('li')
+                    const span = document.createElement('span')
+                    span.textContent = item.name
+
+                    if (item.done) li.classList.add('done')
+
+                    li.appendChild(span)
+                    li.addEventListener('click', (e) => {
+                        if (e.detail === 2) return
+                        item.done = !item.done
+                        render()
+                    })
+                    li.addEventListener('dblclick', () => {
+                        items = items.filter(x => x.id !== item.id)
+                        render()
+                    })
+
+                    list.appendChild(li)
+                })
+            }
+
+            const total = items.length
+            const chuaMua = items.filter(item => !item.done).length
+            status.textContent = `Còn ${chuaMua}/${total} món chưa mua`
+        }
+
+        const addItem = () => {
+            const ten = input.value.trim()
+            if (!ten) {
+                alert('Tên món không được để trống')
+                input.focus()
+                return
+            }
+
+            items.push({
+                id: Date.now() + Math.random(),
+                name: ten,
+                done: false
+            })
+
+            input.value = ''
+            input.focus()
+            render()
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            addItem()
+        })
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault()
+                addItem()
+            }
+        })
+
+        render()
+    </script>
+</body>
+</html>
