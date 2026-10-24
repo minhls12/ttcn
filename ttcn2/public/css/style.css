@@ -1,0 +1,10 @@
+body { background: #f5f6f8; }
+.thumb { background: linear-gradient(135deg,#4e73df,#1cc88a); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+.thumb.t2 { background: linear-gradient(135deg,#f6c23e,#e74a3b); }
+.thumb.t3 { background: linear-gradient(135deg,#36b9cc,#6f42c1); }
+.hero { height: 360px; }
+.hero-sm { height: 176px; }
+.post-thumb { width: 180px; height: 120px; flex-shrink: 0; }
+.cat { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: #e74a3b; font-weight: 700; }
+.card { border: 0; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+footer { background: #212529; color: #adb5bd; }
